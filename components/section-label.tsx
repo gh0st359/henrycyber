@@ -6,10 +6,14 @@ export function SectionLabel({
   label: string;
 }) {
   return (
-    <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.22em] uppercase text-muted">
-      <span className="text-acid">{index}</span>
-      <span className="h-px w-8 bg-acid/40" />
-      <span>{label}</span>
+    <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line-strong)] bg-panel/80 px-2.5 py-1">
+      <span className="h-1.5 w-1.5 rounded-full bg-acid" />
+      <span className="font-mono text-[10px] tracking-[0.14em] text-faint">
+        {index}
+      </span>
+      <span className="font-mono text-[10px] tracking-[0.12em] text-muted uppercase">
+        {label}
+      </span>
     </div>
   );
 }

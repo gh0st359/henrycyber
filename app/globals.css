@@ -1,18 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #07080b;
-  --bg-2: #0c0e13;
-  --panel: #10131a;
-  --line: rgba(214, 255, 74, 0.1);
-  --line-strong: rgba(236, 231, 213, 0.14);
-  --ink: #ece7d5;
-  --muted: #8b8676;
-  --faint: #5c584e;
-  --acid: #d6ff4a;
-  --acid-dim: #9fbf2e;
-  --copper: #d4a574;
-  --font-serif: var(--font-instrument);
+  --bg: #06080c;
+  --bg-2: #0a0e14;
+  --panel: #0d121a;
+  --line: rgba(120, 160, 190, 0.1);
+  --line-strong: rgba(160, 190, 220, 0.14);
+  --ink: #e8eef6;
+  --muted: #7d8b9c;
+  --faint: #556070;
+  --acid: #3ee0b8;
+  --acid-dim: #1fa884;
+  --copper: #8b9cb3;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -27,7 +26,6 @@
   --color-faint: var(--faint);
   --color-acid: var(--acid);
   --color-copper: var(--copper);
-  --font-serif: var(--font-instrument);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -45,45 +43,80 @@ html {
 body {
   min-height: 100%;
   background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(214, 255, 74, 0.06), transparent 50%),
-    radial-gradient(900px 500px at 110% 10%, rgba(212, 165, 116, 0.06), transparent 46%),
+    radial-gradient(900px 480px at 80% -10%, rgba(62, 224, 184, 0.06), transparent 50%),
+    radial-gradient(700px 400px at -10% 20%, rgba(56, 130, 246, 0.05), transparent 45%),
     var(--bg);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 ::selection {
-  background: rgba(214, 255, 74, 0.28);
-  color: #111;
+  background: rgba(62, 224, 184, 0.28);
+  color: #06110d;
 }
 
-.grid-veil {
-  background-image:
-    linear-gradient(rgba(214, 255, 74, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(214, 255, 74, 0.035) 1px, transparent 1px);
-  background-size: 80px 80px;
-  mask-image: radial-gradient(ellipse at 50% 0%, black 20%, transparent 75%);
-}
-
-.grain {
-  pointer-events: none;
-  opacity: 0.18;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.rule {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(214, 255, 74, 0.35), transparent);
+.scan {
+  background-image: linear-gradient(
+    180deg,
+    rgba(62, 224, 184, 0.035) 1px,
+    transparent 1px
+  );
+  background-size: 100% 4px;
+  mask-image: linear-gradient(180deg, black, transparent 70%);
 }
 
 .panel {
-  background: linear-gradient(180deg, rgba(16, 19, 26, 0.92), rgba(10, 12, 16, 0.88));
+  background: rgba(13, 18, 26, 0.88);
   border: 1px solid var(--line-strong);
-  box-shadow: 0 0 0 1px rgba(214, 255, 74, 0.03) inset;
+  border-radius: 12px;
+}
+
+.chip {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.btn-primary {
+  display: inline-flex;
+  height: 40px;
+  align-items: center;
+  border-radius: 999px;
+  background: var(--acid);
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #06110d;
+  transition: transform 140ms ease, filter 140ms ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.06);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  height: 40px;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  padding: 0 16px;
+  font-size: 13px;
+  color: var(--ink);
+  transition: border-color 140ms ease, background 140ms ease;
+}
+
+.btn-ghost:hover {
+  border-color: rgba(62, 224, 184, 0.35);
+  background: rgba(62, 224, 184, 0.05);
 }
 
 .link-arrow {
-  transition: transform 160ms ease;
+  transition: transform 140ms ease;
 }
 
 a:hover .link-arrow {
