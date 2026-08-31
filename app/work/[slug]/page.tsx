@@ -1,7 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SectionLabel } from "@/components/section-label";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { PageShell } from "@/components/page-shell";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { getWork, work } from "@/lib/content";
 
 type WorkParams = { slug: string };
@@ -34,72 +45,95 @@ export default async function WorkDetailPage({
   if (!item) notFound();
 
   const next = work[(work.findIndex((entry) => entry.slug === slug) + 1) % work.length];
+  const sections = [
+    { title: "The gap", copy: item.problem },
+    { title: "The build", copy: item.approach },
+    { title: "What it leaves", copy: item.outcome },
+  ] as const;
 
   return (
-    <article className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
-      <SectionLabel index={item.index} label="System" />
-      <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          {item.title}
-        </h1>
-        <span className="chip">
-          {item.status} · {item.year}
-        </span>
+    <PageShell>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="-ml-2 text-muted-foreground"
+        render={<Link href="/work" />}
+      >
+        <ArrowLeft data-icon="inline-start" />
+        All work
+      </Button>
+
+      <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
+        <div className="max-w-2xl">
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="secondary">{item.status}</Badge>
+            <Badge variant="outline">{item.year}</Badge>
+          </div>
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+            {item.title}
+          </h1>
+          <p className="mt-4 text-[15px] leading-7 text-muted-foreground text-pretty">
+            {item.summary}
+          </p>
+        </div>
+        {item.href ? (
+          <Button variant="outline" render={<a href={item.href} target="_blank" rel="noreferrer" />}>
+            Repository
+            <ArrowUpRight data-icon="inline-end" />
+          </Button>
+        ) : null}
       </div>
-      <p className="mt-5 max-w-2xl text-[15px] leading-7 text-muted">{item.summary}</p>
 
       <div className="mt-6 flex flex-wrap gap-1.5">
         {item.stack.map((tech) => (
-          <span key={tech} className="chip">
+          <Badge key={tech} variant="outline">
             {tech}
-          </span>
+          </Badge>
         ))}
       </div>
 
-      <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
-        <div className="space-y-8">
-          {[
-            ["The gap", item.problem],
-            ["The build", item.approach],
-            ["What it leaves", item.outcome],
-          ].map(([title, copy]) => (
-            <section key={title} className="panel p-6">
-              <h2 className="text-sm font-medium text-acid">{title}</h2>
-              <p className="mt-3 text-[15px] leading-7 text-ink/90">{copy}</p>
-            </section>
+      <div className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
+        <div className="space-y-4">
+          {sections.map((section) => (
+            <Card key={section.title}>
+              <CardHeader>
+                <CardTitle className="text-primary">{section.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="leading-7 text-pretty">{section.copy}</p>
+              </CardContent>
+            </Card>
           ))}
         </div>
 
-        <aside className="panel h-fit p-5">
-          <p className="text-sm font-medium text-ink">Hold points</p>
-          <ul className="mt-4 space-y-3">
-            {item.notes.map((note) => (
-              <li key={note} className="text-sm leading-6 text-muted">
-                {note}
-              </li>
-            ))}
-          </ul>
-          {item.href ? (
-            <a
-              href={item.href}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex text-[13px] text-acid"
-            >
-              Repository <span className="link-arrow ml-1">↗</span>
-            </a>
-          ) : null}
-        </aside>
+        <Card className="h-fit">
+          <CardHeader>
+            <CardTitle>Hold points</CardTitle>
+            <CardDescription>What to keep in mind after the page.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-3">
+              {item.notes.map((note) => (
+                <li key={note}>
+                  <Separator className="mb-3" />
+                  <p className="leading-6 text-muted-foreground">{note}</p>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
       </div>
 
-      <div className="mt-12 flex items-center justify-between text-[13px]">
-        <Link href="/work" className="text-muted hover:text-ink">
-          ← All work
-        </Link>
-        <Link href={`/work/${next.slug}`} className="text-acid">
-          Next: {next.title} →
-        </Link>
+      <div className="mt-12 flex items-center justify-between">
+        <Button variant="ghost" size="sm" render={<Link href="/work" />}>
+          <ArrowLeft data-icon="inline-start" />
+          All work
+        </Button>
+        <Button variant="ghost" size="sm" render={<Link href={`/work/${next.slug}`} />}>
+          Next: {next.title}
+          <ArrowRight data-icon="inline-end" />
+        </Button>
       </div>
-    </article>
+    </PageShell>
   );
 }
