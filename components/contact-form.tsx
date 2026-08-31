@@ -1,19 +1,17 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState, type FormEvent } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { site } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
-type Intent = "collab" | "role" | "research" | "other";
-
-const intents: { value: Intent; label: string }[] = [
-  { value: "collab", label: "Collaboration" },
-  { value: "role", label: "Role / hire" },
-  { value: "research", label: "Research" },
-  { value: "other", label: "Something else" },
-];
+const intents = ["Work", "Collab", "Question", "Other"] as const;
 
 export function ContactForm() {
-  const [intent, setIntent] = useState<Intent>("collab");
+  const [intent, setIntent] = useState<(typeof intents)[number]>("Work");
   const [sent, setSent] = useState(false);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -22,82 +20,78 @@ export function ContactForm() {
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
-    const subject = encodeURIComponent(`[${site.brand}] ${intent} — ${name}`);
-    const body = encodeURIComponent(`${message}\n\n— ${name} <${email}>`);
+    const subject = encodeURIComponent(`[${intent}] ${site.brand} — ${name || "Hello"}`);
+    const body = encodeURIComponent(
+      `${message}\n\n— ${name}${email ? ` (${email})` : ""}`,
+    );
     window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
     setSent(true);
   }
 
-  if (sent) {
-    return (
-      <div className="panel p-6">
-        <p className="text-sm font-medium text-acid">Draft opened</p>
-        <p className="mt-2 text-sm leading-6 text-muted">
-          Your mail client should have a message ready for {site.email}. If
-          nothing opened, write that address directly.
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <form onSubmit={onSubmit} className="panel grid gap-5 p-6">
+    <form onSubmit={onSubmit} className="space-y-5">
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="grid gap-2">
-          <span className="font-mono text-[11px] text-muted">Name</span>
-          <input
-            name="name"
-            required
-            className="h-10 rounded-lg border border-[var(--line-strong)] bg-bg/70 px-3 text-sm text-ink outline-none focus:border-acid/50"
-            placeholder="Your name"
-          />
-        </label>
-        <label className="grid gap-2">
-          <span className="font-mono text-[11px] text-muted">Email</span>
-          <input
+        <div className="space-y-2">
+          <Label htmlFor="name">Name</Label>
+          <Input id="name" name="name" required autoComplete="name" placeholder="Your name" />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
             name="email"
             type="email"
             required
-            className="h-10 rounded-lg border border-[var(--line-strong)] bg-bg/70 px-3 text-sm text-ink outline-none focus:border-acid/50"
+            autoComplete="email"
             placeholder="you@domain.com"
           />
-        </label>
+        </div>
       </div>
 
-      <fieldset className="grid gap-2">
-        <legend className="font-mono text-[11px] text-muted">Intent</legend>
+      <div className="space-y-2">
+        <Label>Intent</Label>
         <div className="flex flex-wrap gap-2">
-          {intents.map((option) => (
-            <button
-              key={option.value}
+          {intents.map((item) => (
+            <Button
+              key={item}
               type="button"
-              onClick={() => setIntent(option.value)}
-              className={`h-8 rounded-full px-3 text-[12px] ${
-                intent === option.value
-                  ? "bg-acid text-[#06110d]"
-                  : "border border-[var(--line-strong)] text-muted hover:text-ink"
-              }`}
+              size="sm"
+              variant={intent === item ? "default" : "outline"}
+              onClick={() => setIntent(item)}
             >
-              {option.label}
-            </button>
+              {item}
+            </Button>
           ))}
         </div>
-      </fieldset>
+      </div>
 
-      <label className="grid gap-2">
-        <span className="font-mono text-[11px] text-muted">Message</span>
-        <textarea
+      <div className="space-y-2">
+        <Label htmlFor="message">Message</Label>
+        <Textarea
+          id="message"
           name="message"
           required
           rows={6}
-          className="rounded-lg border border-[var(--line-strong)] bg-bg/70 px-3 py-2.5 text-sm leading-6 text-ink outline-none focus:border-acid/50"
-          placeholder="What should we talk about?"
+          placeholder="What are you working on?"
         />
-      </label>
+      </div>
 
-      <button type="submit" className="btn-primary w-fit">
-        Open email draft
-      </button>
+      <div className="flex flex-wrap items-center gap-3">
+        <Button type="submit">Open email draft</Button>
+        <Button variant="outline" render={<a href={`mailto:${site.email}`} />}>
+          {site.email}
+        </Button>
+      </div>
+
+      <p
+        className={cn(
+          "text-sm text-muted-foreground",
+          sent ? "text-primary" : "invisible",
+        )}
+        aria-live="polite"
+      >
+        Mail client opened. If nothing happened, write {site.email} directly.
+      </p>
     </form>
   );
 }

@@ -122,10 +122,30 @@ export const notes: NoteItem[] = [
       "Anyone can run a scanner. The interesting problem starts after the first open port: what is this thing, what does it talk to, and why should anyone care before the next standup?",
       "Axiom exists because I wanted the collection layer to be honest about what it is. Version 2.0 does not pretend to score risk. It maps infrastructure, keeps the data local, and writes reports you can parse. Intelligence is a later stage. Pretending you have it on day one is how tools become noise generators.",
       "Local-first is not nostalgia. Security work still happens in places you cannot ship to a vendor API. If the first hop of your recon pipeline is someone else's cloud, you have already made a decision about trust, retention, and cost that most teams never write down.",
-      "The goal is a shift in sentence: not \u201chere is what is exposed,\u201d but \u201chere is the risk, and here is why it matters.\u201d That sentence requires structure. Structure is the unglamorous part I am willing to build first.",
+      "The goal is a shift in sentence: not “here is what is exposed,” but “here is the risk, and here is why it matters.” That sentence requires structure. Structure is the unglamorous part I am willing to build first.",
     ],
   },
 ];
+
+export const stats = [
+  { label: "Public systems", value: "3" },
+  { label: "Station", value: "Pittsburgh" },
+  { label: "Lane", value: "Security + agents" },
+  { label: "Mode", value: "Builder" },
+] as const;
+
+export const skills = [
+  "Python",
+  "TypeScript",
+  "Rust",
+  "Recon",
+  "MCP",
+  "Local models",
+  "DNS / WHOIS",
+  "Agent harnesses",
+  "TUI",
+  "Threat research",
+] as const;
 
 export const practices = [
   {
