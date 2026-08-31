@@ -23,7 +23,7 @@ export function SignalClock() {
   }, []);
 
   return (
-    <span className="font-mono text-[11px] tracking-[0.16em] text-acid tabular-nums">
+    <span className="font-mono text-[11px] tabular-nums tracking-wide text-muted">
       {now} ET
     </span>
   );
