@@ -30,11 +30,9 @@ export function ContactForm() {
 
   if (sent) {
     return (
-      <div className="panel p-6 sm:p-8">
-        <p className="font-mono text-[11px] tracking-[0.2em] text-acid uppercase">
-          Draft opened
-        </p>
-        <p className="mt-3 max-w-md text-sm leading-6 text-muted">
+      <div className="panel p-6">
+        <p className="text-sm font-medium text-acid">Draft opened</p>
+        <p className="mt-2 text-sm leading-6 text-muted">
           Your mail client should have a message ready for {site.email}. If
           nothing opened, write that address directly.
         </p>
@@ -43,46 +41,40 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="panel grid gap-5 p-6 sm:p-8">
-      <div className="grid gap-5 sm:grid-cols-2">
+    <form onSubmit={onSubmit} className="panel grid gap-5 p-6">
+      <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2">
-          <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">
-            Name
-          </span>
+          <span className="font-mono text-[11px] text-muted">Name</span>
           <input
             name="name"
             required
-            className="h-11 border border-[var(--line-strong)] bg-bg/60 px-3 text-sm text-ink outline-none focus:border-acid/50"
+            className="h-10 rounded-lg border border-[var(--line-strong)] bg-bg/70 px-3 text-sm text-ink outline-none focus:border-acid/50"
             placeholder="Your name"
           />
         </label>
         <label className="grid gap-2">
-          <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">
-            Email
-          </span>
+          <span className="font-mono text-[11px] text-muted">Email</span>
           <input
             name="email"
             type="email"
             required
-            className="h-11 border border-[var(--line-strong)] bg-bg/60 px-3 text-sm text-ink outline-none focus:border-acid/50"
+            className="h-10 rounded-lg border border-[var(--line-strong)] bg-bg/70 px-3 text-sm text-ink outline-none focus:border-acid/50"
             placeholder="you@domain.com"
           />
         </label>
       </div>
 
-      <fieldset className="grid gap-3">
-        <legend className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">
-          Intent
-        </legend>
+      <fieldset className="grid gap-2">
+        <legend className="font-mono text-[11px] text-muted">Intent</legend>
         <div className="flex flex-wrap gap-2">
           {intents.map((option) => (
             <button
               key={option.value}
               type="button"
               onClick={() => setIntent(option.value)}
-              className={`h-9 px-3 font-mono text-[10px] tracking-[0.16em] uppercase ${
+              className={`h-8 rounded-full px-3 text-[12px] ${
                 intent === option.value
-                  ? "bg-acid text-bg"
+                  ? "bg-acid text-[#06110d]"
                   : "border border-[var(--line-strong)] text-muted hover:text-ink"
               }`}
             >
@@ -93,22 +85,17 @@ export function ContactForm() {
       </fieldset>
 
       <label className="grid gap-2">
-        <span className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">
-          Message
-        </span>
+        <span className="font-mono text-[11px] text-muted">Message</span>
         <textarea
           name="message"
           required
           rows={6}
-          className="border border-[var(--line-strong)] bg-bg/60 px-3 py-3 text-sm leading-6 text-ink outline-none focus:border-acid/50"
+          className="rounded-lg border border-[var(--line-strong)] bg-bg/70 px-3 py-2.5 text-sm leading-6 text-ink outline-none focus:border-acid/50"
           placeholder="What should we talk about?"
         />
       </label>
 
-      <button
-        type="submit"
-        className="h-11 w-fit bg-acid px-6 font-mono text-[11px] tracking-[0.18em] text-bg uppercase"
-      >
+      <button type="submit" className="btn-primary w-fit">
         Open email draft
       </button>
     </form>

@@ -10,34 +10,30 @@ export const metadata: Metadata = {
 
 export default function NotesPage() {
   return (
-    <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-      <SectionLabel index="04" label="Field notes" />
-      <h1 className="mt-6 font-serif text-5xl tracking-[-0.03em] sm:text-6xl">
-        Writing you can replace
+    <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+      <SectionLabel index="LOG" label="Field notes" />
+      <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+        Operator log
       </h1>
-      <p className="mt-6 max-w-2xl text-base leading-8 text-muted">
-        Two sample essays drawn from things you have already said in public.
-        Use them as tone samples — keep, rewrite, or delete.
+      <p className="mt-4 max-w-xl text-[15px] leading-7 text-muted">
+        Sample notes drawn from things already said in public. Keep, rewrite,
+        or delete.
       </p>
-
-      <div className="mt-14 divide-y divide-[var(--line-strong)] border-y border-[var(--line-strong)]">
-        {notes.map((note) => (
+      <div className="mt-10 panel overflow-hidden">
+        {notes.map((note, index) => (
           <Link
             key={note.slug}
             href={`/notes/${note.slug}`}
-            className="group grid gap-3 py-8 sm:grid-cols-[88px_minmax(0,1fr)]"
+            className={`group grid gap-3 px-5 py-5 sm:grid-cols-[88px_minmax(0,1fr)] ${
+              index > 0 ? "border-t border-[var(--line)]" : ""
+            }`}
           >
-            <span className="font-mono text-[11px] tracking-[0.18em] text-acid">
-              {note.index}
-            </span>
+            <span className="font-mono text-[11px] text-acid">{note.date}</span>
             <div>
-              <p className="font-mono text-[10px] tracking-[0.16em] text-muted uppercase">
-                {note.date} · {note.reading}
-              </p>
-              <h2 className="mt-2 font-serif text-3xl tracking-[-0.02em] group-hover:text-acid">
+              <h2 className="text-lg font-semibold tracking-tight group-hover:text-acid">
                 {note.title}
               </h2>
-              <p className="mt-3 max-w-xl text-sm leading-7 text-muted">{note.dek}</p>
+              <p className="mt-2 text-sm leading-6 text-muted">{note.dek}</p>
             </div>
           </Link>
         ))}

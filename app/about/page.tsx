@@ -12,58 +12,58 @@ const facts = [
   ["Name", site.name],
   ["Station", site.location],
   ["Domain", site.domain],
-  ["Public handle", "gh0st359"],
+  ["Handle", "gh0st359"],
   ["Mail", site.email],
 ];
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-      <SectionLabel index="05" label="About" />
-      <div className="mt-6 grid gap-14 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+    <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+      <SectionLabel index="ID" label="About" />
+      <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
         <div>
-          <h1 className="font-serif text-5xl tracking-[-0.03em] sm:text-6xl">
-            Operator, not a template
+          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+            Operator first
           </h1>
-          <div className="mt-8 space-y-6 text-base leading-8 text-muted">
+          <div className="mt-6 space-y-5 text-[15px] leading-7 text-muted">
             <p>
               I am {site.name}, based in {site.location}. I came up through
               freelance software and AI research, then pointed that energy at
-              cybersecurity — not as a career-change slogan, as a build
-              program.
+              cybersecurity — as a build program, not a slogan.
             </p>
             <p>
               The through-line is simple: collect signal locally, give an
-              agent enough structure to be useful, and leave an artifact another
-              person can audit. That is Axiom. That is Tyraxes. That is why a
-              site called {site.domain} should feel like a briefing, not a
-              résumé theme.
+              agent enough structure to be useful, and leave an artifact
+              another person can audit. That is Axiom. That is Tyraxes. That
+              is why {site.domain} should feel like a console, not a template.
             </p>
             <p>
               Public coursework includes Google&apos;s Foundations of
               Cybersecurity and Assets, Threats, and Vulnerabilities, plus
               introductory ethical hacking study. The more honest credential is
-              the work: tools that run on your machine and get sharper over
-              versions.
+              the work.
             </p>
           </div>
         </div>
 
-        <aside className="panel p-6 sm:p-7">
-          <p className="font-mono text-[10px] tracking-[0.2em] text-copper uppercase">
-            File
-          </p>
-          <dl className="mt-5 divide-y divide-[var(--line-strong)]">
+        <aside className="panel overflow-hidden">
+          <div className="border-b border-[var(--line-strong)] px-5 py-3">
+            <p className="font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
+              Identity file
+            </p>
+          </div>
+          <dl>
             {facts.map(([label, value]) => (
-              <div key={label} className="flex items-baseline justify-between gap-4 py-3">
-                <dt className="font-mono text-[10px] tracking-[0.16em] text-faint uppercase">
-                  {label}
-                </dt>
-                <dd className="text-right text-sm text-ink">{value}</dd>
+              <div
+                key={label}
+                className="flex items-center justify-between gap-4 border-b border-[var(--line)] px-5 py-3 last:border-b-0"
+              >
+                <dt className="font-mono text-[11px] text-faint">{label}</dt>
+                <dd className="text-right text-[13px] text-ink">{value}</dd>
               </div>
             ))}
           </dl>
-          <div className="mt-6 flex gap-4 font-mono text-[11px] tracking-[0.16em] uppercase">
+          <div className="flex gap-4 px-5 py-4 text-[13px]">
             <a href={site.github} className="text-acid" target="_blank" rel="noreferrer">
               GitHub ↗
             </a>
@@ -74,40 +74,26 @@ export default function AboutPage() {
         </aside>
       </div>
 
-      <section className="mt-20 border-t border-[var(--line-strong)] pt-14">
-        <SectionLabel index="06" label="Make it yours" />
-        <h2 className="mt-5 font-serif text-3xl tracking-[-0.02em] sm:text-4xl">
+      <section className="mt-16">
+        <SectionLabel index="CFG" label="Make it yours" />
+        <h2 className="mt-4 text-2xl font-semibold tracking-tight">
           What this preview is for
         </h2>
-        <ol className="mt-8 grid gap-6 sm:grid-cols-3">
+        <ol className="mt-6 grid gap-3 sm:grid-cols-3">
           {[
-            [
-              "Swap the copy",
-              "Edit lib/content.ts and lib/site.ts. Titles, case studies, and notes all live there.",
-            ],
-            [
-              "Add the real work",
-              "Drop private projects you actually want public. Hide anything that should stay in the lab.",
-            ],
-            [
-              "Point the domain",
-              "When the tone is right, attach henrycyber.com in your DNS and Vercel project settings.",
-            ],
+            ["Swap the copy", "Edit lib/content.ts and lib/site.ts."],
+            ["Add the real work", "Publish only what should be on the board."],
+            ["Point the domain", "Attach henrycyber.com in DNS and Vercel."],
           ].map(([title, copy], index) => (
-            <li key={title} className="panel p-6">
-              <p className="font-mono text-[11px] tracking-[0.18em] text-acid">
-                0{index + 1}
-              </p>
-              <h3 className="mt-3 font-serif text-2xl">{title}</h3>
-              <p className="mt-3 text-sm leading-7 text-muted">{copy}</p>
+            <li key={title} className="panel p-5">
+              <p className="font-mono text-[11px] text-acid">0{index + 1}</p>
+              <h3 className="mt-3 text-base font-semibold tracking-tight">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted">{copy}</p>
             </li>
           ))}
         </ol>
-        <Link
-          href="/contact"
-          className="mt-10 inline-flex h-11 items-center bg-acid px-5 font-mono text-[11px] tracking-[0.16em] text-bg uppercase"
-        >
-          Get in touch <span className="link-arrow ml-2">→</span>
+        <Link href="/contact" className="btn-primary mt-8">
+          Get in touch
         </Link>
       </section>
     </div>

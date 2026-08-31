@@ -34,27 +34,24 @@ export default async function NoteDetailPage({
   if (!note) notFound();
 
   return (
-    <article className="mx-auto max-w-3xl px-5 py-16 sm:px-8 sm:py-24">
+    <article className="mx-auto max-w-2xl px-5 py-14 sm:px-8 sm:py-20">
       <SectionLabel index={note.index} label="Note" />
-      <p className="mt-6 font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+      <p className="mt-5 font-mono text-[11px] text-muted">
         {note.date} · {note.reading}
       </p>
-      <h1 className="mt-4 font-serif text-5xl tracking-[-0.03em] sm:text-6xl">
+      <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
         {note.title}
       </h1>
-      <p className="mt-6 text-lg leading-8 text-muted">{note.dek}</p>
-      <div className="mt-12 space-y-6">
+      <p className="mt-5 text-[15px] leading-7 text-muted">{note.dek}</p>
+      <div className="mt-10 space-y-5">
         {note.body.map((paragraph) => (
-          <p key={paragraph.slice(0, 24)} className="text-base leading-8 text-ink/90">
+          <p key={paragraph.slice(0, 24)} className="text-[15px] leading-7 text-ink/90">
             {paragraph}
           </p>
         ))}
       </div>
-      <div className="mt-16 border-t border-[var(--line-strong)] pt-8">
-        <Link
-          href="/notes"
-          className="font-mono text-[11px] tracking-[0.16em] text-acid uppercase"
-        >
+      <div className="mt-12 border-t border-[var(--line-strong)] pt-6">
+        <Link href="/notes" className="text-[13px] text-acid">
           ← All notes
         </Link>
       </div>

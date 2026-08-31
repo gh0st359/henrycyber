@@ -36,56 +36,43 @@ export default async function WorkDetailPage({
   const next = work[(work.findIndex((entry) => entry.slug === slug) + 1) % work.length];
 
   return (
-    <article className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-      <SectionLabel index={item.index} label="Case brief" />
-      <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
-        <h1 className="font-serif text-5xl tracking-[-0.03em] sm:text-7xl">
+    <article className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+      <SectionLabel index={item.index} label="System" />
+      <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
           {item.title}
         </h1>
-        <p className="font-mono text-[11px] tracking-[0.18em] text-copper uppercase">
+        <span className="chip">
           {item.status} · {item.year}
-        </p>
+        </span>
       </div>
-      <p className="mt-8 max-w-2xl text-lg leading-8 text-muted">{item.summary}</p>
+      <p className="mt-5 max-w-2xl text-[15px] leading-7 text-muted">{item.summary}</p>
 
-      <div className="mt-8 flex flex-wrap gap-2">
+      <div className="mt-6 flex flex-wrap gap-1.5">
         {item.stack.map((tech) => (
-          <span
-            key={tech}
-            className="border border-[var(--line-strong)] px-3 py-1.5 font-mono text-[10px] tracking-[0.16em] text-muted uppercase"
-          >
+          <span key={tech} className="chip">
             {tech}
           </span>
         ))}
       </div>
 
-      <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
-        <div className="space-y-10">
-          <section>
-            <h2 className="font-mono text-[11px] tracking-[0.2em] text-acid uppercase">
-              The gap
-            </h2>
-            <p className="mt-3 text-base leading-8 text-ink/90">{item.problem}</p>
-          </section>
-          <section>
-            <h2 className="font-mono text-[11px] tracking-[0.2em] text-acid uppercase">
-              The build
-            </h2>
-            <p className="mt-3 text-base leading-8 text-ink/90">{item.approach}</p>
-          </section>
-          <section>
-            <h2 className="font-mono text-[11px] tracking-[0.2em] text-acid uppercase">
-              What it leaves
-            </h2>
-            <p className="mt-3 text-base leading-8 text-ink/90">{item.outcome}</p>
-          </section>
+      <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
+        <div className="space-y-8">
+          {[
+            ["The gap", item.problem],
+            ["The build", item.approach],
+            ["What it leaves", item.outcome],
+          ].map(([title, copy]) => (
+            <section key={title} className="panel p-6">
+              <h2 className="text-sm font-medium text-acid">{title}</h2>
+              <p className="mt-3 text-[15px] leading-7 text-ink/90">{copy}</p>
+            </section>
+          ))}
         </div>
 
-        <aside className="panel h-fit p-6">
-          <p className="font-mono text-[10px] tracking-[0.2em] text-copper uppercase">
-            Hold points
-          </p>
-          <ul className="mt-5 space-y-4">
+        <aside className="panel h-fit p-5">
+          <p className="text-sm font-medium text-ink">Hold points</p>
+          <ul className="mt-4 space-y-3">
             {item.notes.map((note) => (
               <li key={note} className="text-sm leading-6 text-muted">
                 {note}
@@ -97,25 +84,19 @@ export default async function WorkDetailPage({
               href={item.href}
               target="_blank"
               rel="noreferrer"
-              className="mt-8 inline-flex font-mono text-[11px] tracking-[0.16em] text-acid uppercase"
+              className="mt-6 inline-flex text-[13px] text-acid"
             >
-              Repository <span className="link-arrow ml-2">↗</span>
+              Repository <span className="link-arrow ml-1">↗</span>
             </a>
           ) : null}
         </aside>
       </div>
 
-      <div className="mt-16 flex items-center justify-between border-t border-[var(--line-strong)] pt-8">
-        <Link
-          href="/work"
-          className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase hover:text-ink"
-        >
+      <div className="mt-12 flex items-center justify-between text-[13px]">
+        <Link href="/work" className="text-muted hover:text-ink">
           ← All work
         </Link>
-        <Link
-          href={`/work/${next.slug}`}
-          className="font-mono text-[11px] tracking-[0.16em] text-acid uppercase"
-        >
+        <Link href={`/work/${next.slug}`} className="text-acid">
           Next: {next.title} →
         </Link>
       </div>
