@@ -20,7 +20,6 @@ const nav = [
   { href: "/work", label: "Work" },
   { href: "/notes", label: "Notes" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
 ] as const;
 
 export function SiteHeader() {
@@ -96,6 +95,12 @@ export function SiteHeader() {
                   {item.label}
                 </Button>
               ))}
+              <Button
+                className="mt-2 justify-start"
+                render={<Link href="/contact" onClick={() => setOpen(false)} />}
+              >
+                Contact
+              </Button>
             </nav>
           </SheetContent>
         </Sheet>
