@@ -1,18 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
-import { PageShell } from "@/components/page-shell";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Container } from "@/components/container";
 import { getWork, work } from "@/lib/content";
 
 type WorkParams = { slug: string };
@@ -52,88 +41,61 @@ export default async function WorkDetailPage({
   ] as const;
 
   return (
-    <PageShell>
-      <Button
-        variant="ghost"
-        size="sm"
-        className="-ml-2 text-muted-foreground"
-        render={<Link href="/work" />}
-      >
-        <ArrowLeft data-icon="inline-start" />
-        All work
-      </Button>
-
-      <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
-        <div className="max-w-2xl">
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{item.status}</Badge>
-            <Badge variant="outline">{item.year}</Badge>
-          </div>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
-            {item.title}
-          </h1>
-          <p className="mt-4 text-[15px] leading-7 text-muted-foreground text-pretty">
-            {item.summary}
-          </p>
-        </div>
+    <Container className="py-16 sm:py-24">
+      <Link href="/work" className="text-[13px] text-mute hover:text-fg">
+        ← All work
+      </Link>
+      <p className="mt-8 text-[13px] text-blue">
+        {item.status} · {item.year}
+      </p>
+      <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
+        <h1 className="text-4xl font-medium tracking-tight sm:text-5xl">
+          {item.title}
+        </h1>
         {item.href ? (
-          <Button variant="outline" render={<a href={item.href} target="_blank" rel="noreferrer" />}>
-            Repository
-            <ArrowUpRight data-icon="inline-end" />
-          </Button>
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noreferrer"
+            className="text-[14px] text-blue hover:text-blue-soft"
+          >
+            Repository ↗
+          </a>
         ) : null}
       </div>
+      <p className="mt-5 max-w-2xl text-[16px] leading-7 text-mute">
+        {item.summary}
+      </p>
+      <p className="mt-4 text-[13px] text-faint">{item.stack.join("  ·  ")}</p>
 
-      <div className="mt-6 flex flex-wrap gap-1.5">
-        {item.stack.map((tech) => (
-          <Badge key={tech} variant="outline">
-            {tech}
-          </Badge>
+      <div className="mt-14 max-w-2xl space-y-10">
+        {sections.map((section) => (
+          <section key={section.title}>
+            <h2 className="text-[13px] tracking-wide text-blue uppercase">
+              {section.title}
+            </h2>
+            <p className="mt-3 text-[16px] leading-7">{section.copy}</p>
+          </section>
         ))}
       </div>
 
-      <div className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
-        <div className="space-y-4">
-          {sections.map((section) => (
-            <Card key={section.title}>
-              <CardHeader>
-                <CardTitle className="text-primary">{section.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="leading-7 text-pretty">{section.copy}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      <ul className="mt-14 max-w-2xl space-y-3 border-t border-line pt-8">
+        {item.notes.map((note) => (
+          <li key={note} className="text-[15px] leading-6 text-mute">
+            <span className="mr-2 text-blue">–</span>
+            {note}
+          </li>
+        ))}
+      </ul>
 
-        <Card className="h-fit">
-          <CardHeader>
-            <CardTitle>Hold points</CardTitle>
-            <CardDescription>What to keep in mind after the page.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {item.notes.map((note) => (
-                <li key={note}>
-                  <Separator className="mb-3" />
-                  <p className="leading-6 text-muted-foreground">{note}</p>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+      <div className="mt-16 flex items-center justify-between text-[13px]">
+        <Link href="/work" className="text-mute hover:text-fg">
+          ← All work
+        </Link>
+        <Link href={`/work/${next.slug}`} className="text-blue hover:text-blue-soft">
+          Next: {next.title} →
+        </Link>
       </div>
-
-      <div className="mt-12 flex items-center justify-between">
-        <Button variant="ghost" size="sm" render={<Link href="/work" />}>
-          <ArrowLeft data-icon="inline-start" />
-          All work
-        </Button>
-        <Button variant="ghost" size="sm" render={<Link href={`/work/${next.slug}`} />}>
-          Next: {next.title}
-          <ArrowRight data-icon="inline-end" />
-        </Button>
-      </div>
-    </PageShell>
+    </Container>
   );
 }

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/page-intro";
-import { PageShell } from "@/components/page-shell";
-import { WorkCard } from "@/components/work-card";
-import { Badge } from "@/components/ui/badge";
+import { Container } from "@/components/container";
+import { WorkRow } from "@/components/work-row";
 import { work } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -12,22 +10,21 @@ export const metadata: Metadata = {
 
 export default function WorkPage() {
   return (
-    <PageShell>
-      <PageIntro
-        eyebrow="Work"
-        title="Public systems"
-        description="Axiom is recon. Tyraxes is the operator harness. xmcp is agent infrastructure. Three public projects, written so another person can follow the constraint."
-      />
-      <div className="mt-6 flex flex-wrap gap-2">
-        <Badge variant="secondary">{work.length} projects</Badge>
-        <Badge variant="outline">Local-first</Badge>
-        <Badge variant="outline">Authorized-use only</Badge>
-      </div>
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
+    <Container className="py-16 sm:py-24">
+      <p className="text-[13px] tracking-wide text-blue uppercase">Work</p>
+      <h1 className="mt-3 text-4xl font-medium tracking-tight sm:text-5xl">
+        Public systems
+      </h1>
+      <p className="mt-4 max-w-xl text-[16px] leading-7 text-mute">
+        Axiom is recon. Tyraxes is the operator harness. xmcp is agent
+        infrastructure. Three public projects, written so another person can
+        follow the constraint.
+      </p>
+      <div className="mt-12 border-b border-line">
         {work.map((item) => (
-          <WorkCard key={item.slug} item={item} />
+          <WorkRow key={item.slug} item={item} />
         ))}
       </div>
-    </PageShell>
+    </Container>
   );
 }

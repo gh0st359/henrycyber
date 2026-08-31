@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { site } from "@/lib/site";
-import { cn } from "@/lib/utils";
 
 const intents = ["Work", "Collab", "Question", "Other"] as const;
+
+const fieldClass =
+  "mt-2 w-full border-0 border-b border-line bg-transparent px-0 py-2.5 text-[15px] text-fg placeholder:text-faint focus:border-blue focus:ring-0 focus:outline-none";
 
 export function ContactForm() {
   const [intent, setIntent] = useState<(typeof intents)[number]>("Work");
@@ -29,65 +27,76 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5">
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="name">Name</Label>
-          <Input id="name" name="name" required autoComplete="name" placeholder="Your name" />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
+    <form onSubmit={onSubmit} className="space-y-7">
+      <div className="grid gap-7 sm:grid-cols-2">
+        <label className="block text-[13px] text-mute">
+          Name
+          <input
+            name="name"
+            required
+            autoComplete="name"
+            placeholder="Your name"
+            className={fieldClass}
+          />
+        </label>
+        <label className="block text-[13px] text-mute">
+          Email
+          <input
             name="email"
             type="email"
             required
             autoComplete="email"
             placeholder="you@domain.com"
+            className={fieldClass}
           />
-        </div>
+        </label>
       </div>
 
-      <div className="space-y-2">
-        <Label>Intent</Label>
-        <div className="flex flex-wrap gap-2">
+      <fieldset>
+        <legend className="text-[13px] text-mute">Intent</legend>
+        <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
           {intents.map((item) => (
-            <Button
+            <button
               key={item}
               type="button"
-              size="sm"
-              variant={intent === item ? "default" : "outline"}
               onClick={() => setIntent(item)}
+              className={
+                intent === item
+                  ? "text-[13px] text-blue"
+                  : "text-[13px] text-mute hover:text-fg"
+              }
             >
               {item}
-            </Button>
+            </button>
           ))}
         </div>
-      </div>
+      </fieldset>
 
-      <div className="space-y-2">
-        <Label htmlFor="message">Message</Label>
-        <Textarea
-          id="message"
+      <label className="block text-[13px] text-mute">
+        Message
+        <textarea
           name="message"
           required
           rows={6}
           placeholder="What are you working on?"
+          className={`${fieldClass} resize-y`}
         />
-      </div>
+      </label>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <Button type="submit">Open email draft</Button>
-        <Button variant="outline" render={<a href={`mailto:${site.email}`} />}>
+      <div className="flex flex-wrap items-center gap-5">
+        <button
+          type="submit"
+          className="bg-blue px-4 py-2 text-[13px] font-medium text-black hover:bg-blue-soft"
+        >
+          Open email draft
+        </button>
+        <a href={`mailto:${site.email}`} className="text-[13px] text-mute hover:text-fg">
           {site.email}
-        </Button>
+        </a>
       </div>
 
       <p
-        className={cn(
-          "text-sm text-muted-foreground",
-          sent ? "text-primary" : "invisible",
-        )}
+        className={`text-[13px] ${sent ? "text-blue" : "invisible"}`}
         aria-live="polite"
       >
         Mail client opened. If nothing happened, write {site.email} directly.

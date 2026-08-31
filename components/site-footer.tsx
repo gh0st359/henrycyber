@@ -1,49 +1,34 @@
 import Link from "next/link";
-import { Separator } from "@/components/ui/separator";
+import { Container } from "@/components/container";
 import { site } from "@/lib/site";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-border">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-        <div>
-          <p className="text-sm font-medium">{site.name}</p>
-          <p className="text-sm text-muted-foreground">
-            {site.location} · {site.availability}
-          </p>
-        </div>
-        <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-          <Link href="/work" className="text-muted-foreground hover:text-foreground">
+    <footer className="mt-auto border-t border-line">
+      <Container className="flex flex-col gap-4 py-8 text-[13px] sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-mute">
+          {site.name}
+          <span className="text-faint"> · </span>
+          {site.location}
+        </p>
+        <nav className="flex flex-wrap gap-x-5 gap-y-2 text-mute">
+          <Link href="/work" className="hover:text-fg">
             Work
           </Link>
-          <Link href="/notes" className="text-muted-foreground hover:text-foreground">
+          <Link href="/notes" className="hover:text-fg">
             Notes
           </Link>
-          <Link href="/about" className="text-muted-foreground hover:text-foreground">
+          <Link href="/about" className="hover:text-fg">
             About
           </Link>
-          <a
-            href={site.github}
-            className="text-muted-foreground hover:text-foreground"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={site.github} className="hover:text-fg" target="_blank" rel="noreferrer">
             GitHub
           </a>
-          <a
-            href={site.linkedin}
-            className="text-muted-foreground hover:text-foreground"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={site.linkedin} className="hover:text-fg" target="_blank" rel="noreferrer">
             LinkedIn
           </a>
         </nav>
-      </div>
-      <Separator />
-      <p className="mx-auto max-w-6xl px-5 py-4 text-xs text-muted-foreground sm:px-8">
-        {site.domain} · Built as a working draft, not a finished brand.
-      </p>
+      </Container>
     </footer>
   );
 }

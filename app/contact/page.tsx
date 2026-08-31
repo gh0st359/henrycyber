@@ -1,16 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form";
-import { PageIntro } from "@/components/page-intro";
-import { PageShell } from "@/components/page-shell";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Container } from "@/components/container";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -20,62 +10,38 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <PageShell>
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+    <Container className="py-16 sm:py-24">
+      <div className="grid gap-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
         <div>
-          <PageIntro
-            eyebrow="Contact"
-            title="Get in touch"
-            description={`Collaboration, a role, research, or a correction. The form opens a draft to ${site.email} — no backend in the middle.`}
-          />
-          <Card className="mt-8">
-            <CardHeader>
-              <CardTitle>Direct</CardTitle>
-              <CardDescription>Same inbox either way.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 text-sm">
-              <div>
-                <p className="text-muted-foreground">Email</p>
-                <p className="mt-1">{site.email}</p>
-              </div>
-              <Separator />
-              <div>
-                <p className="text-muted-foreground">GitHub</p>
-                <Button
-                  variant="link"
-                  className="h-auto px-0"
-                  render={<a href={site.github} target="_blank" rel="noreferrer" />}
-                >
+          <p className="text-[13px] tracking-wide text-blue uppercase">Contact</p>
+          <h1 className="mt-3 text-4xl font-medium tracking-tight sm:text-5xl">
+            Get in touch
+          </h1>
+          <p className="mt-4 max-w-sm text-[16px] leading-7 text-mute">
+            Collaboration, a role, research, or a correction. The form opens a
+            draft to {site.email} — no backend in the middle.
+          </p>
+          <dl className="mt-10 space-y-4 text-[14px]">
+            <div>
+              <dt className="text-faint">Email</dt>
+              <dd className="mt-1">
+                <a href={`mailto:${site.email}`} className="hover:text-blue">
+                  {site.email}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt className="text-faint">GitHub</dt>
+              <dd className="mt-1">
+                <a href={site.github} className="hover:text-blue" target="_blank" rel="noreferrer">
                   github.com/{site.handle}
-                </Button>
-              </div>
-              <Separator />
-              <div>
-                <p className="text-muted-foreground">LinkedIn</p>
-                <Button
-                  variant="link"
-                  className="h-auto px-0"
-                  render={<a href={site.linkedin} target="_blank" rel="noreferrer" />}
-                >
-                  Henry Hilf
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+                </a>
+              </dd>
+            </div>
+          </dl>
         </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Write a draft</CardTitle>
-            <CardDescription>
-              Opens your mail client with the fields filled in.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ContactForm />
-          </CardContent>
-        </Card>
+        <ContactForm />
       </div>
-    </PageShell>
+    </Container>
   );
 }
