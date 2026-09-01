@@ -1,90 +1,63 @@
 import Link from "next/link";
 import { Container } from "@/components/container";
-import { WorkRow } from "@/components/work-row";
-import { notes, practices, work } from "@/lib/content";
 import { site } from "@/lib/site";
+
+const destinations = [
+  {
+    href: "/work",
+    label: "Work",
+    copy: "Public systems — recon, agent harnesses, and MCP infrastructure.",
+  },
+  {
+    href: "/notes",
+    label: "Notes",
+    copy: "Short writing on agents, reconnaissance, and local-first tooling.",
+  },
+  {
+    href: "/about",
+    label: "About",
+    copy: "Background, location, and how I usually start.",
+  },
+  {
+    href: "/contact",
+    label: "Contact",
+    copy: "A role, a collab, or a correction — opens a mail draft.",
+  },
+] as const;
 
 export default function HomePage() {
   return (
-    <div>
-      <Container className="pt-16 pb-20 sm:pt-24 sm:pb-28">
-        <p className="text-[13px] text-blue">
-          {site.name} · {site.location}
-        </p>
-        <h1 className="mt-5 max-w-3xl text-[2.6rem] leading-[1.08] font-medium tracking-tight sm:text-6xl">
-          Local-first security tools.
-          <br />
-          Systems that act.
-        </h1>
-        <p className="mt-6 max-w-xl text-[16px] leading-7 text-mute">
-          I build reconnaissance platforms and agent harnesses that keep data
-          on your machine and leave an audit trail another person can read.
-        </p>
-        <div className="mt-8 flex flex-wrap items-center gap-6 text-[14px]">
-          <Link href="/work" className="text-blue hover:text-blue-soft">
-            View work →
-          </Link>
-          <Link href="/contact" className="text-mute hover:text-fg">
-            Get in touch
-          </Link>
-        </div>
-      </Container>
+    <Container className="py-16 sm:py-24">
+      <p className="text-[13px] text-blue">
+        {site.name} · {site.location}
+      </p>
+      <h1 className="mt-5 max-w-3xl text-[2.4rem] leading-[1.1] font-medium tracking-tight sm:text-5xl">
+        Local-first security tools.
+        <br />
+        Systems that act.
+      </h1>
+      <p className="mt-6 max-w-xl text-[16px] leading-7 text-mute">
+        I build reconnaissance platforms and agent harnesses that keep data on
+        your machine and leave an audit trail another person can read.
+      </p>
 
-      <Container className="pb-20">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="text-[13px] tracking-wide text-blue uppercase">
-            Selected work
-          </h2>
-          <Link href="/work" className="text-[13px] text-mute hover:text-fg">
-            All systems
+      <div className="mt-16 border-b border-line">
+        {destinations.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="group grid gap-1 border-t border-line py-6 sm:grid-cols-[120px_minmax(0,1fr)_auto] sm:items-baseline sm:gap-8"
+          >
+            <span className="text-[14px] text-blue">{item.label}</span>
+            <span className="text-[15px] leading-6 text-mute group-hover:text-fg">
+              {item.copy}
+            </span>
+            <span className="hidden text-[13px] text-faint group-hover:text-blue sm:block">
+              →
+            </span>
           </Link>
-        </div>
-        <div className="mt-4 border-b border-line">
-          {work.map((item) => (
-            <WorkRow key={item.slug} item={item} />
-          ))}
-        </div>
-      </Container>
-
-      <section className="border-y border-line">
-        <Container className="py-16 sm:py-20">
-          <h2 className="text-[13px] tracking-wide text-blue uppercase">
-            Practice
-          </h2>
-          <div className="mt-8 grid gap-10 sm:grid-cols-2">
-            {practices.map((practice) => (
-              <div key={practice.title}>
-                <p className="text-[13px] text-blue">{practice.index}</p>
-                <h3 className="mt-2 text-lg tracking-tight">{practice.title}</h3>
-                <p className="mt-2 text-[15px] leading-6 text-mute">
-                  {practice.copy}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <Container className="py-16 sm:py-20">
-        <h2 className="text-[13px] tracking-wide text-blue uppercase">Notes</h2>
-        <div className="mt-4 border-b border-line">
-          {notes.map((note) => (
-            <Link
-              key={note.slug}
-              href={`/notes/${note.slug}`}
-              className="group grid gap-2 border-t border-line py-6 sm:grid-cols-[120px_minmax(0,1fr)] sm:items-baseline"
-            >
-              <span className="text-[13px] text-mute">{note.date}</span>
-              <div>
-                <p className="text-lg tracking-tight group-hover:text-blue">
-                  {note.title}
-                </p>
-                <p className="mt-2 text-[15px] leading-6 text-mute">{note.dek}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </Container>
-    </div>
+        ))}
+      </div>
+    </Container>
   );
 }
